@@ -1,16 +1,17 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Threax.Extensions.Configuration.SchemaBinder;
 
 namespace SleepDetector
 {
     static class Program
     {
-        static string ConfigFileName = "SleepConfig.ini";
-
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -19,25 +20,18 @@ namespace SleepDetector
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            DetectorForm form = new DetectorForm();
 
-            //ConfigFile config = new ConfigFile(ConfigFileName);
-            //config.loadConfigFile();
-            //var section = config.createOrRetrieveConfigSection("Program");
-            form.SleepMode = false;  //section.getValue("SleepMode", false);
+            var configBuilder = new ConfigurationBuilder();
+            configBuilder.AddJsonFile("appsettings.json");
+            var configuration = new SchemaConfigurationBinder(configBuilder.Build());
 
-            try
-            {
-                //if (!File.Exists(ConfigFileName))
-                //{
-                //    config.writeConfigFile();
-                //}
-            }
-            catch (Exception)
-            {
-                //don't care
-            }
+            //setup our DI
+            var serviceProvider = new ServiceCollection()
+                .AddSingleton<DetectorForm>()
+                .AddHomeClient(o => configuration.Bind("HomeClient", o))
+                .BuildServiceProvider();
 
+            DetectorForm form = serviceProvider.GetRequiredService<DetectorForm>();
             Application.Run(form);
         }
     }

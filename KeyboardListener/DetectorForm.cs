@@ -28,8 +28,6 @@ namespace SleepDetector
         const int SoundEvent = 2;
         const int SystemEvent = 3;
 
-        bool sleepMode = false;
-
         public DetectorForm()
         {
             InitializeComponent();
@@ -45,18 +43,6 @@ namespace SleepDetector
             RegisterHotKey(this.Handle, TvEvent, 0x0001 | 0x0002 | 0x4000, (int)Keys.T);
             RegisterHotKey(this.Handle, SoundEvent, 0x0001 | 0x0002 | 0x4000, (int)Keys.S);
             RegisterHotKey(this.Handle, SystemEvent, 0x0001 | 0x0002 | 0x4000, (int)Keys.P);
-        }
-
-        public bool SleepMode
-        {
-            get
-            {
-                return sleepMode;
-            }
-            set
-            {
-                sleepMode = value;
-            }
         }
 
         private void HotKeyEvent(long evt)
