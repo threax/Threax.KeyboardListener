@@ -23,6 +23,7 @@ namespace SleepDetector
 
             var configBuilder = new ConfigurationBuilder();
             configBuilder.AddJsonFile("appsettings.json");
+            configBuilder.AddJsonFile("appsettings.Production.json", true);
             var configuration = new SchemaConfigurationBinder(configBuilder.Build());
 
             //setup our DI

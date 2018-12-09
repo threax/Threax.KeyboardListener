@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
 using System.Drawing;
-using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Threax.Home.Client;
 
 namespace SleepDetector
 {
@@ -28,8 +22,12 @@ namespace SleepDetector
         const int SoundEvent = 2;
         const int SystemEvent = 3;
 
-        public DetectorForm()
+        private EntryPointInjector entryPoint;
+
+        public DetectorForm(EntryPointInjector entryPoint)
         {
+            this.entryPoint = entryPoint;
+
             InitializeComponent();
 
             //Thanks to Bill at http://stackoverflow.com/questions/683896/any-way-to-create-a-hidden-main-window-in-c
@@ -45,9 +43,10 @@ namespace SleepDetector
             RegisterHotKey(this.Handle, SystemEvent, 0x0001 | 0x0002 | 0x4000, (int)Keys.P);
         }
 
-        private void HotKeyEvent(long evt)
+        private Task HotKeyEvent(long evt)
         {
             Console.WriteLine(evt);
+            return Task.CompletedTask;
         }
 
         protected override void WndProc(ref Message m)
@@ -66,7 +65,8 @@ namespace SleepDetector
                 //    }
                 //    break;
                 case WM_HOTKEY:
-                    HotKeyEvent(m.WParam.ToInt64());
+                    var wparam = m.WParam.ToInt64();
+                    Task.Run(() => HotKeyEvent(wparam));
                     break;
             }
             base.WndProc(ref m);
