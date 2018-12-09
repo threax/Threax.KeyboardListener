@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -36,10 +37,31 @@ namespace SleepDetector
             RegisterHotKey(this.Handle, (int)KeyEvent.LightEvent, 0x0001 | 0x0002 | 0x4000, (int)Keys.L);
         }
 
-        private Task HotKeyEvent(KeyEvent evt)
+        private async Task HotKeyEvent(KeyEvent evt)
         {
-            Console.WriteLine(evt);
-            return Task.CompletedTask;
+            switch (evt)
+            {
+                case KeyEvent.SleepEvent:
+                    var entry = await entryPoint.Load();
+                    var buttons = await entry.ListButtons(new ButtonQuery()
+                    {
+                        Limit = int.MaxValue
+                    });
+
+                    foreach(var button in buttons.Items)
+                    {
+                        if(button.Data.Label == "Andrew's Office")
+                        {
+                            var state = button.Data.ButtonStates.First(i => i.Label == "On");
+
+                            await button.Apply(new ApplyButtonInput()
+                            {
+                                ButtonStateId = state.ButtonStateId
+                            });
+                        }
+                    }
+                    break;
+            }            
         }
 
         protected override void WndProc(ref Message m)
@@ -48,7 +70,17 @@ namespace SleepDetector
             {
                 case WM_HOTKEY:
                     var wparam = (KeyEvent)m.WParam.ToInt32();
-                    Task.Run(() => HotKeyEvent(wparam));
+                    Task.Run(async () =>
+                    {
+                        try
+                        {
+                            await HotKeyEvent(wparam);
+                        }
+                        catch(Exception ex)
+                        {
+                            Console.Write($"A {ex.GetType().Name} occured.\nMessage:\n{ex.Message}");
+                        }
+                    });
                     break;
             }
             base.WndProc(ref m);
