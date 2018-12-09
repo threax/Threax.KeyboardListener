@@ -33,7 +33,6 @@
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.notificationContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.showWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.notificationContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -47,7 +46,6 @@
             // notificationContextMenu
             // 
             this.notificationContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.showWindowsToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.notificationContextMenu.Name = "notificationContextMenu";
             this.notificationContextMenu.Size = new System.Drawing.Size(180, 80);
@@ -58,13 +56,6 @@
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(179, 24);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-            // 
-            // showWindowsToolStripMenuItem
-            // 
-            this.showWindowsToolStripMenuItem.CheckOnClick = true;
-            this.showWindowsToolStripMenuItem.Name = "showWindowsToolStripMenuItem";
-            this.showWindowsToolStripMenuItem.Size = new System.Drawing.Size(179, 24);
-            this.showWindowsToolStripMenuItem.Text = "Show Windows";
             // 
             // DetectorForm
             // 
@@ -84,7 +75,6 @@
         private System.Windows.Forms.NotifyIcon notifyIcon;
         private System.Windows.Forms.ContextMenuStrip notificationContextMenu;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem showWindowsToolStripMenuItem;
     }
 }
 
