@@ -43,20 +43,20 @@ namespace SleepDetector
             {
                 case KeyEvent.SleepEvent:
                     var entry = await entryPoint.Load();
-                    var buttons = await entry.ListButtons(new ButtonQuery()
+                    var switches = await entry.ListSwitches(new SwitchQuery()
                     {
                         Limit = int.MaxValue
                     });
 
-                    foreach(var button in buttons.Items)
+                    foreach(var sw in switches.Items)
                     {
-                        if(button.Data.Label == "Andrew's Office")
+                        if(sw.Data.Name == "Andrew Office")
                         {
-                            var state = button.Data.ButtonStates.First(i => i.Label == "On");
-
-                            await button.Apply(new ApplyButtonInput()
+                            await sw.Set(new SetSwitchInput()
                             {
-                                ButtonStateId = state.ButtonStateId
+                                Brightness = 255,
+                                HexColor = "f0c080",
+                                Value = "toggle"
                             });
                         }
                     }
@@ -78,7 +78,11 @@ namespace SleepDetector
                         }
                         catch(Exception ex)
                         {
-                            Console.Write($"A {ex.GetType().Name} occured.\nMessage:\n{ex.Message}");
+                            Action action = () =>
+                            {
+                                MessageBox.Show($"A {ex.GetType().Name} occured.\nMessage:\n{ex.Message}");
+                            };
+                            this.Invoke(action);
                         }
                     });
                     break;
