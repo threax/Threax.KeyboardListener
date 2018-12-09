@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using KeyboardListener;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -26,9 +27,13 @@ namespace SleepDetector
             configBuilder.AddJsonFile("appsettings.Production.json", true);
             var configuration = new SchemaConfigurationBinder(configBuilder.Build());
 
+            var eventConfig = new EventConfig();
+            configuration.Bind("Events", eventConfig);
+
             //setup our DI
             var serviceProvider = new ServiceCollection()
                 .AddSingleton<DetectorForm>()
+                .AddSingleton<EventConfig>(eventConfig)
                 .AddHomeClient(o => configuration.Bind("HomeClient", o))
                 .BuildServiceProvider();
 

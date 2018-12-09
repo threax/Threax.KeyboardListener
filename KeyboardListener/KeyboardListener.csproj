@@ -60,6 +60,7 @@
     <EmbeddedResource Include="DetectorForm.resx">
       <DependentUpon>DetectorForm.cs</DependentUpon>
     </EmbeddedResource>
+    <Compile Include="EventConfig.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -96,7 +97,7 @@
       <Version>3.10.4</Version>
     </PackageReference>
     <PackageReference Include="Threax.AspNetCore.Halcyon.Client">
-      <Version>7.0.0</Version>
+      <Version>7.0.1</Version>
     </PackageReference>
     <PackageReference Include="Threax.Extensions.Configuration.SchemaBinder">
       <Version>1.3.0</Version>

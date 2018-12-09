@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KeyboardListener;
+using System;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -10,7 +11,7 @@ namespace SleepDetector
 {
     enum KeyEvent
     {
-        SleepEvent = 0,
+        MainEvent = 0,
         TvEvent = 1,
         SoundEvent = 2,
         LightEvent = 3,
@@ -22,16 +23,18 @@ namespace SleepDetector
         const int WM_HOTKEY = 0x0312;
 
         private EntryPointInjector entryPoint;
+        private EventConfig eventConfig;
 
-        public DetectorForm(EntryPointInjector entryPoint)
+        public DetectorForm(EntryPointInjector entryPoint, EventConfig eventConfig)
         {
             this.entryPoint = entryPoint;
+            this.eventConfig = eventConfig;
 
             InitializeComponent();
 
             MakeHiddenWindow();
 
-            RegisterHotKey(this.Handle, (int)KeyEvent.SleepEvent, 0x0004 | 0x4000, (int)Keys.Escape);
+            RegisterHotKey(this.Handle, (int)KeyEvent.MainEvent, 0x0004 | 0x4000, (int)Keys.Escape);
             RegisterHotKey(this.Handle, (int)KeyEvent.TvEvent, 0x0001 | 0x0002 | 0x4000, (int)Keys.T);
             RegisterHotKey(this.Handle, (int)KeyEvent.SoundEvent, 0x0001 | 0x0002 | 0x4000, (int)Keys.S);
             RegisterHotKey(this.Handle, (int)KeyEvent.LightEvent, 0x0001 | 0x0002 | 0x4000, (int)Keys.L);
@@ -39,29 +42,44 @@ namespace SleepDetector
 
         private async Task HotKeyEvent(KeyEvent evt)
         {
+            //This can be made better, dont have to hard code like this
             switch (evt)
             {
-                case KeyEvent.SleepEvent:
-                    var entry = await entryPoint.Load();
-                    var switches = await entry.ListSwitches(new SwitchQuery()
-                    {
-                        Limit = int.MaxValue
-                    });
-
-                    foreach(var sw in switches.Items)
-                    {
-                        if(sw.Data.Name == "Andrew Office")
-                        {
-                            await sw.Set(new SetSwitchInput()
-                            {
-                                Brightness = 255,
-                                HexColor = "f0c080",
-                                Value = "toggle"
-                            });
-                        }
-                    }
+                case KeyEvent.MainEvent:
+                    await RunEvent(this.eventConfig.Main);
+                    break;
+                case KeyEvent.TvEvent:
+                    await RunEvent(this.eventConfig.Tv);
+                    break;
+                case KeyEvent.SoundEvent:
+                    await RunEvent(this.eventConfig.Sound);
+                    break;
+                case KeyEvent.LightEvent:
+                    await RunEvent(this.eventConfig.Light);
                     break;
             }            
+        }
+
+        private async Task RunEvent(Event evt)
+        {
+            var entry = await entryPoint.Load();
+            var lookup = evt.Actions.Select(i => i.SwitchId).ToList();
+            var switches = await entry.ListSwitches(new SwitchQuery()
+            {
+                SwitchIds = lookup,
+                Limit = int.MaxValue
+            });
+
+            foreach(var action in evt.Actions)
+            {
+                var sw = switches.Items.First(i => i.Data.SwitchId == action.SwitchId);
+                await sw.Set(new SetSwitchInput()
+                {
+                    Brightness = action.Brightness,
+                    HexColor = action.HexColor,
+                    Value = action.Value
+                });
+            }
         }
 
         protected override void WndProc(ref Message m)
