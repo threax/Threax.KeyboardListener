@@ -60,7 +60,7 @@ namespace SleepDetector
             }            
         }
 
-        private async Task RunEvent(Event evt)
+        private async Task RunEvent(KeyboardListener.HotkeyEvent evt)
         {
             var entry = await entryPoint.Load();
             var lookup = evt.Actions.Select(i => i.SwitchId).ToList();

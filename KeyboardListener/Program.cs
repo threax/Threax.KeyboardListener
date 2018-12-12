@@ -21,10 +21,11 @@ namespace SleepDetector
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            var appDir = Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]);
 
             var configBuilder = new ConfigurationBuilder();
-            configBuilder.AddJsonFile("appsettings.json");
-            configBuilder.AddJsonFile("appsettings.Production.json", true);
+            configBuilder.AddJsonFile(Path.Combine(appDir, "appsettings.json"));
+            configBuilder.AddJsonFile(Path.Combine(appDir, "appsettings.Production.json"));
             var configuration = new SchemaConfigurationBinder(configBuilder.Build());
 
             var eventConfig = new EventConfig();

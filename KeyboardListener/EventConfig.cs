@@ -12,24 +12,24 @@ namespace KeyboardListener
 
         public String Value { get; set; }
 
-        public byte Brightness { get; set; }
+        public byte? Brightness { get; set; }
 
         public String HexColor { get; set; }
     }
 
-    public class Event
+    public class HotkeyEvent
     {
-        public List<EventAction> Actions { get; set; }
+        public List<EventAction> Actions { get; set; } = new List<EventAction>();
     }
 
     public class EventConfig
     {
-        public Event Main { get; set; }
+        public HotkeyEvent Main { get; set; }
 
-        public Event Tv { get; set; }
+        public HotkeyEvent Tv { get; set; }
 
-        public Event Sound { get; set; }
+        public HotkeyEvent Sound { get; set; }
 
-        public Event Light { get; set; }
+        public HotkeyEvent Light { get; set; }
     }
 }
