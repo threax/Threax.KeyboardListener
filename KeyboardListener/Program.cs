@@ -27,7 +27,8 @@ namespace SleepDetector
 
                 var configBuilder = new ConfigurationBuilder();
                 configBuilder.AddJsonFile(Path.Combine(appDir, "appsettings.json"));
-                configBuilder.AddJsonFile(Path.Combine(appDir, "appsettings.Production.json"));
+                configBuilder.AddJsonFile(Path.Combine(appDir, "appsettings.Production.json"), optional: true);
+                configBuilder.AddJsonFile(Path.Combine(appDir, "appsettings.secrets.json"), optional: true);
                 var configuration = new SchemaConfigurationBinder(configBuilder.Build());
 
                 var eventConfig = new EventConfig();

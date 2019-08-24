@@ -1,4 +1,6 @@
-﻿namespace SleepDetector
+﻿using System.IO;
+
+namespace SleepDetector
 {
     partial class DetectorForm
     {
@@ -39,7 +41,7 @@
             // notifyIcon
             // 
             this.notifyIcon.ContextMenuStrip = this.notificationContextMenu;
-            this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
+            this.notifyIcon.Icon = new System.Drawing.Icon(Path.Combine(Path.GetDirectoryName(this.GetType().Assembly.Location), "icon_sleep.ico"));
             this.notifyIcon.Text = "Sleep Detector";
             this.notifyIcon.Visible = true;
             // 
