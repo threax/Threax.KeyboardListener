@@ -41,8 +41,8 @@ namespace SleepDetector
             // notifyIcon
             // 
             this.notifyIcon.ContextMenuStrip = this.notificationContextMenu;
-            this.notifyIcon.Icon = new System.Drawing.Icon(Path.Combine(Path.GetDirectoryName(this.GetType().Assembly.Location), "icon_sleep.ico"));
-            this.notifyIcon.Text = "Sleep Detector";
+            this.notifyIcon.Icon = new System.Drawing.Icon(Path.Combine(Path.GetDirectoryName(this.GetType().Assembly.Location), "keyboard_listener.ico"));
+            this.notifyIcon.Text = "Keyboard Listener";
             this.notifyIcon.Visible = true;
             // 
             // notificationContextMenu
@@ -66,7 +66,7 @@ namespace SleepDetector
             this.ClientSize = new System.Drawing.Size(282, 181);
             this.Name = "DetectorForm";
             this.ShowInTaskbar = false;
-            this.Text = "Sleep Detector";
+            this.Text = "Keyboard Listener";
             this.notificationContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
