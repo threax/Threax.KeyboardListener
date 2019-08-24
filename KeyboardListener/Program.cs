@@ -19,27 +19,34 @@ namespace SleepDetector
         [STAThread]
         static void Main(String[] args)
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            var appDir = Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]);
+            try
+            {
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                var appDir = Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]);
 
-            var configBuilder = new ConfigurationBuilder();
-            configBuilder.AddJsonFile(Path.Combine(appDir, "appsettings.json"));
-            configBuilder.AddJsonFile(Path.Combine(appDir, "appsettings.Production.json"));
-            var configuration = new SchemaConfigurationBinder(configBuilder.Build());
+                var configBuilder = new ConfigurationBuilder();
+                configBuilder.AddJsonFile(Path.Combine(appDir, "appsettings.json"));
+                configBuilder.AddJsonFile(Path.Combine(appDir, "appsettings.Production.json"));
+                var configuration = new SchemaConfigurationBinder(configBuilder.Build());
 
-            var eventConfig = new EventConfig();
-            configuration.Bind("Events", eventConfig);
+                var eventConfig = new EventConfig();
+                configuration.Bind("Events", eventConfig);
 
-            //setup our DI
-            var serviceProvider = new ServiceCollection()
-                .AddSingleton<DetectorForm>()
-                .AddSingleton<EventConfig>(eventConfig)
-                .AddHomeClient(o => configuration.Bind("HomeClient", o))
-                .BuildServiceProvider();
+                //setup our DI
+                var serviceProvider = new ServiceCollection()
+                    .AddSingleton<DetectorForm>()
+                    .AddSingleton<EventConfig>(eventConfig)
+                    .AddHomeClient(o => configuration.Bind("HomeClient", o))
+                    .BuildServiceProvider();
 
-            DetectorForm form = serviceProvider.GetRequiredService<DetectorForm>();
-            Application.Run(form);
+                DetectorForm form = serviceProvider.GetRequiredService<DetectorForm>();
+                Application.Run(form);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
