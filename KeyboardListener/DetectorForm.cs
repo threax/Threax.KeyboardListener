@@ -15,6 +15,7 @@ namespace SleepDetector
         TvEvent = 1,
         SoundEvent = 2,
         LightEvent = 3,
+        SecondTvEvent = 4,
     }
 
     public partial class DetectorForm : Form
@@ -38,6 +39,7 @@ namespace SleepDetector
             RegisterHotKey(this.Handle, (int)KeyEvent.TvEvent, 0x0001 | 0x0002 | 0x4000, (int)Keys.T);
             RegisterHotKey(this.Handle, (int)KeyEvent.SoundEvent, 0x0001 | 0x0002 | 0x4000, (int)Keys.S);
             RegisterHotKey(this.Handle, (int)KeyEvent.LightEvent, 0x0001 | 0x0002 | 0x4000, (int)Keys.L);
+            RegisterHotKey(this.Handle, (int)KeyEvent.SecondTvEvent, 0x0001 | 0x0002 | 0x4000, (int)Keys.B);
         }
 
         private async Task HotKeyEvent(KeyEvent evt)
@@ -56,6 +58,9 @@ namespace SleepDetector
                     break;
                 case KeyEvent.LightEvent:
                     await RunEvent(this.eventConfig.Light);
+                    break;
+                case KeyEvent.SecondTvEvent:
+                    await RunEvent(this.eventConfig.SecondTvEvent);
                     break;
             }            
         }

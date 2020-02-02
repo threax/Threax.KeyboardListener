@@ -31,5 +31,7 @@ namespace KeyboardListener
         public HotkeyEvent Sound { get; set; }
 
         public HotkeyEvent Light { get; set; }
+
+        public HotkeyEvent SecondTvEvent { get; set; }
     }
 }
