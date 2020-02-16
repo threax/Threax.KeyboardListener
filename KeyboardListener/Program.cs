@@ -35,11 +35,20 @@ namespace SleepDetector
                 configuration.Bind("Events", eventConfig);
 
                 //setup our DI
-                var serviceProvider = new ServiceCollection()
-                    .AddSingleton<DetectorForm>()
-                    .AddSingleton<EventConfig>(eventConfig)
-                    .AddHomeClient(o => configuration.Bind("HomeClient", o))
-                    .BuildServiceProvider();
+                var services = new ServiceCollection();
+
+                services.AddSingleton<DetectorForm>()
+                    .AddSingleton<EventConfig>(eventConfig);
+
+                services.AddHalcyonClient();
+
+                services.AddHomeClient(o => configuration.Bind("HomeClient", o))
+                        .SetupHttpClientFactoryWithClientCredentials(o =>
+                        {
+                            configuration.Bind("HomeClient", o);
+                        });
+
+                var serviceProvider = services.BuildServiceProvider();
 
                 DetectorForm form = serviceProvider.GetRequiredService<DetectorForm>();
                 Application.Run(form);
