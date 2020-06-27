@@ -9,12 +9,12 @@
 
   <ItemGroup>
     <PackageReference Include="IdentityModel" Version="4.1.1" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.1" />
-    <PackageReference Include="Threax.AspNetCore.Halcyon.Client" Version="9.0.0" />
-    <PackageReference Include="Threax.AspNetCore.Halcyon.Client.OpenIdConnect" Version="1.0.0" />
-    <PackageReference Include="Threax.Extensions.Configuration.SchemaBinder" Version="1.5.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.5" />
+    <PackageReference Include="Threax.AspNetCore.Halcyon.Client" Version="10.0.0" />
+    <PackageReference Include="Threax.AspNetCore.Halcyon.Client.OpenIdConnect" Version="1.0.1" />
+    <PackageReference Include="Threax.Extensions.Configuration.SchemaBinder" Version="2.0.0" />
     <PackageReference Include="Threax.Home.Client" Version="2.0.0" />
-    <PackageReference Include="IdentityModel" Version="4.1.1" />
+    <PackageReference Include="IdentityModel" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>
