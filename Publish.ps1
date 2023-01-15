@@ -28,7 +28,7 @@ try{
     try{
         Push-Location $appFolder -ErrorAction Stop
         dotnet restore $csproj; Test-Error "Could not dotnet restore $csproj."
-        dotnet publish -c Release -r win-x64 -o "$publishDir"; Test-Error "Error publishing app to $publishDir"
+        dotnet publish -c Release -r win-x64 --self-contained -o "$publishDir"; Test-Error "Error publishing app to $publishDir"
     }
     finally{
         Pop-Location

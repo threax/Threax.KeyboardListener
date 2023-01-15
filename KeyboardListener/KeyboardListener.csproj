@@ -1,20 +1,19 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <ApplicationIcon>keyboard_listener.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="IdentityModel" Version="4.1.1" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.5" />
-    <PackageReference Include="Threax.AspNetCore.Halcyon.Client" Version="10.0.0" />
-    <PackageReference Include="Threax.AspNetCore.Halcyon.Client.OpenIdConnect" Version="1.0.1" />
-    <PackageReference Include="Threax.Extensions.Configuration.SchemaBinder" Version="2.0.0" />
+    <PackageReference Include="IdentityModel" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
+    <PackageReference Include="Threax.AspNetCore.Halcyon.Client" Version="11.0.1" />
+    <PackageReference Include="Threax.AspNetCore.Halcyon.Client.OpenIdConnect" Version="3.0.0" />
+    <PackageReference Include="Threax.Extensions.Configuration.SchemaBinder" Version="2.0.1" />
     <PackageReference Include="Threax.Home.Client" Version="2.0.0" />
-    <PackageReference Include="IdentityModel" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>
