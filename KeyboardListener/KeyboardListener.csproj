@@ -2,16 +2,16 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net10.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <ApplicationIcon>keyboard_listener.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="IdentityModel" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
-    <PackageReference Include="Threax.AspNetCore.Halcyon.Client" Version="11.0.1" />
-    <PackageReference Include="Threax.AspNetCore.Halcyon.Client.OpenIdConnect" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.7" />
+    <PackageReference Include="Threax.AspNetCore.Halcyon.Client" Version="19.0.0" />
+    <PackageReference Include="Threax.AspNetCore.Halcyon.Client.OpenIdConnect" Version="19.0.0" />
     <PackageReference Include="Threax.Extensions.Configuration.SchemaBinder" Version="2.0.1" />
     <PackageReference Include="Threax.Home.Client" Version="2.0.0" />
   </ItemGroup>
